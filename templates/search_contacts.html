@@ -1,0 +1,49 @@
+<!-- search_contacts.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contacts App - Search</title>
+
+</head>
+<body>
+    <h1>Contacts - Search</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <div>
+                <input
+                    id="inputPassword2"
+                    name="query"
+                    placeholder="Search for Contacts" type="text">
+            </div>
+            <!--end of col-->
+            <div>
+                <button type="submit">Search</button>
+            </div>
+            <!--end of col-->
+        </div>
+    </form>
+
+
+    <h2>Search Results</h2>
+    {% if query %}
+    <p>Showing results for: "{{ query }}"</p>
+    {% endif %}
+    <ul>
+        {% for contact in contacts %}
+        <li>
+            <span class="name">{{ contact.name }}</span>
+            <span class="mobile">{{ contact.mobile }}</span>
+            <span class="email">{{ contact.email }}</span>
+            <span class="spam">{{ contact.spam }}</span>
+            <a href="{% url 'spam' cid=contact.id %}">Toggle</a>
+        </li>
+        {% endfor %}
+        {% if query and not contacts %}
+        <li>No results found.</li>
+        {% endif %}
+    </ul>
+</body>
+</html>

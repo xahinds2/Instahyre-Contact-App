@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+    <title>Contacts</title>
+
+    <body>
+
+        <nav>
+            <a href="/logout"><button type="submit"> Logout </button></a>
+        </nav>
+
+        <h1>Contacts</h1>
+
+        <form action="search_contacts/" method="post">
+            {% csrf_token %}
+
+            <div>
+                <input
+                    id="inputPassword2"
+                    name="query"
+                    placeholder="Search for Contacts" type="text">
+            </div>
+
+            <button class="btn btn-lg btn-success" type="submit">Search</button>
+
+        </form>
+
+        <div>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="text" name="mobile" placeholder="Mobile" required>
+                <input type="text" name="email" placeholder="Email">
+                <button type="submit">Add Contact</button>
+            </form>
+        </div>
+
+        <a href="{% url 'populate' qty=1 %}"><button>Populate Random Contacts</button> </a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Spam</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr scope="row">
+                    <td><a>{{ contact.id }}</a></td>
+                    <td><a>{{ contact.name }}</a></td>
+                    <td><a>{{ contact.mobile }}</a></td>
+                    <td><a>{{ contact.email }}</a></td>
+                    <td><a>{{ contact.spam }}</a></td>
+                    <td><a href="{% url 'spam' cid=contact.id %}">Toggle</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>
