@@ -9,22 +9,18 @@
 <body>
     <h1>Contacts - Search</h1>
 
-    <form class="card card-sm" method="post">
+    <form method="post">
         {% csrf_token %}
-        <div class="card-body row no-gutters align-items-center">
-            <div class="col-auto">
-                <i class="fas fa-search h4 text-body"></i>
-            </div>
-            <!--end of col-->
-            <div class="col">
-                <input class="form-control form-control-lg form-control-borderless"
+        <div>
+            <div>
+                <input
                     id="inputPassword2"
                     name="query"
                     placeholder="Search for Contacts" type="text">
             </div>
             <!--end of col-->
-            <div class="col-auto">
-                <button class="btn btn-lg btn-success" type="submit">Search</button>
+            <div>
+                <button type="submit">Search</button>
             </div>
             <!--end of col-->
         </div>
@@ -35,9 +31,9 @@
     {% if query %}
     <p>Showing results for: "{{ query }}"</p>
     {% endif %}
-    <ul class="contact-list">
+    <ul>
         {% for contact in contacts %}
-        <li class="contact">
+        <li>
             <span class="name">{{ contact.name }}</span>
             <span class="mobile">{{ contact.mobile }}</span>
             <span class="email">{{ contact.email }}</span>

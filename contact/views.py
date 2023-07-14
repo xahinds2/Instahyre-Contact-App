@@ -3,6 +3,7 @@ from django.db import DataError
 from faker import Faker
 from contact.models import Contact
 from django.shortcuts import render, redirect
+from ordered_set import OrderedSet
 
 fake = Faker()
 
@@ -41,7 +42,7 @@ def search_contacts(request):
                     contacts[i].email = ''
 
             context = {
-                'contacts': contacts,
+                'contacts': OrderedSet(contacts),
                 'query': query
             }
 
@@ -63,7 +64,8 @@ def populate(request, qty):
 
     for _ in range(qty):
         name = fake.name()
-        mobile = fake.phone_number()
+        s = fake.phone_number().replace('-', '')
+        mobile = "".join(c for c in s if c.isnumeric())
         email = fake.email()
         _spam = fake.pybool()
         try:
