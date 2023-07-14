@@ -263,7 +263,8 @@
                     <br/>
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-10 col-lg-8">
-                            <form action="#" class="card card-sm" method="post">
+                            <form action="search_contacts/" class="card card-sm" method="post">
+                                {% csrf_token %}
                                 <div class="card-body row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <i class="fas fa-search h4 text-body"></i>
@@ -272,8 +273,8 @@
                                     <div class="col">
                                         <input class="form-control form-control-lg form-control-borderless"
                                             id="inputPassword2"
-                                            name="product_name"
-                                            placeholder="Search for products" type="text">
+                                            name="query"
+                                            placeholder="Search for Contacts" type="text">
                                     </div>
                                     <!--end of col-->
                                     <div class="col-auto">

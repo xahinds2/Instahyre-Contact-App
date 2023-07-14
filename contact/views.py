@@ -1,4 +1,6 @@
+from contact.forms import SearchForm
 from contact.models import Contact
+from django.db.models import Q
 from django.shortcuts import render, redirect
 
 
@@ -15,3 +17,23 @@ def dashboard(request):
     }
 
     return render(request, 'dashboard.html', context)
+
+
+def search_contacts(request):
+
+    if request.method == 'POST':
+        query = request.POST.get('query')
+
+        if query:
+            contacts = Contact.objects.filter(
+                Q(name__icontains=query) | Q(mobile__icontains=query)
+            )
+
+            context = {
+                'contacts': contacts,
+                'query': query
+            }
+
+            return render(request, 'search.html', context)
+
+    return render(request, 'search.html')
