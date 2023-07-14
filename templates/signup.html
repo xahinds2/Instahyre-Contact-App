@@ -52,8 +52,8 @@
 
     <body>
         <div class="container">
-            <p style="color:red;">{{error}}</p>
             <h1>Sign Up</h1>
+            <p style="color:red;">{{msg}}</p>
             <form action="/signup/" method="post">
                 {% csrf_token %}
                 <input type="text" name="name" placeholder="Name" required><br>

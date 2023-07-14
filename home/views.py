@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from home.models import CustomUser as User
 from django.contrib.auth import login, logout
@@ -19,6 +20,8 @@ def custom_login(request):
             login(request, user)
             return redirect('home')
 
+        return render(request, 'login.html', {"error": "Username or password is wrong!"})
+
     return render(request, 'login.html')
 
 
@@ -30,11 +33,11 @@ def signup(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = User.objects.filter(username=username).first()
-        if user:
-            return render(request, 'signup.html')
+        try:
+            User.objects.create(username=username, mobile=mobile, name=name, password=password, email=email)
+        except IntegrityError:
+            return render(request, 'signup.html', {'msg': 'Username or Mobile already exist!'})
 
-        User.objects.create(username=username, mobile=mobile, name=name, password=password, email=email)
         return redirect('login')
 
     return render(request, 'signup.html')
