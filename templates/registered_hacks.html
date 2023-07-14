@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Hackify</title>
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+        <style>
+            .card{
+            background-color:rgb(25,25,29)
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 20px;
+                margin-left: 30px;
+                margin-right: 30px;
+            }
+
+            h1 {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #ffffff;
+            }
+
+            .hackathon-details {
+                margin-left: 300px;
+                margin-right: 300px;
+                margin-bottom: 30px;
+                padding: 50px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .hackathon-details h2 {
+                margin-top: 0;
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .hackathon-details p {
+                margin: 5px 0;
+                font-size: 16px;
+            }
+
+            .apply-button {
+                text-align: center;
+                margin-top: 15px;
+            }
+
+            .apply-button a {
+                display: inline-block;
+                background-color: #4CAF50;
+                color: #ffffff;
+                padding: 8px 16px;
+                text-decoration: none;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+        </style>
+    </head>
+
+    <body style="background-color:#19191d;">
+        <!--************                          Navbar component                *********t**********-->
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="/">Hackify</a>
+                <div class="">
+                    <a href="/hackathons"> <button class="btn btn-outline-success" type="submit">Hackathons</button></a>
+                    {% if isLogin == '' %}
+                    <a href="/login"> <button class="btn btn-outline-success" type="submit">Login</button></a>
+                    <a href="/signup"> <button class="btn btn-outline-success" type="submit">Signup</button> </a>
+                    {% else %}
+                    <a href="/logout"> <button class="btn btn-outline-success" type="submit"> Logout</button> </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        <h1>My Hackathons</h1>
+
+        {% for hackathon in hackathons %}
+        <div class="hackathon-details border-success text-white">
+            <h2 style="text-align: center;">{{ hackathon.title }}</h2>
+            <p><strong>Submission Type:</strong> {{ hackathon.sub_typ }}</p>
+            <p><strong>Start Date:</strong> {{ hackathon.start }}</p>
+            <p><strong>End Date:</strong> {{ hackathon.end }}</p>
+            <p><strong>Reward:</strong> {{ hackathon.reward }}</p>
+            <p><strong>Prize:</strong> {{ hackathon.prize }}</p>
+            <p><strong>Description:</strong></p>
+            <p>{{ hackathon.desc }}</p>
+        </div>
+        {% endfor %}
+
+    </body>
+</html>

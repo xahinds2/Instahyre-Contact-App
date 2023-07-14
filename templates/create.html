@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Create Contact</title>
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+        <style>
+            .card{
+            background-color:rgb(25,25,29)
+            }
+            body {
+              font-family: Arial, sans-serif;
+              background-color: #f4f4f4;
+            }
+
+            form {
+              max-width: 500px;
+              margin: 0 auto;
+              padding: 20px;
+              background-color: #ffffff;
+              border-radius: 5px;
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            label {
+              display: block;
+              font-weight: bold;
+              margin-bottom: 5px;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            textarea,
+            select {
+              width: 100%;
+              padding: 8px;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+              box-sizing: border-box;
+              margin-bottom: 10px;
+              font-size: 16px;
+            }
+
+            input[type="file"] {
+              margin-top: 5px;
+            }
+
+            input[type="submit"] {
+              background-color: #4CAF50;
+              color: #fff;
+              padding: 10px 20px;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 16px;
+            }
+
+            input[type="submit"]:hover {
+              background-color: #45a049;
+            }
+
+            @media (max-width: 600px) {
+              form {
+                max-width: 100%;
+                margin: 0 auto;
+                padding: 10px;
+              }
+
+              input[type="submit"] {
+                width: 100%;
+              }
+            }
+        </style>
+    </head>
+
+    <body style="background-color:#19191d;">
+        <!--************                          Navbar component                *********t**********-->
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="/">Hackify</a>
+                <div class="">
+                    <a href="/my_hackathons"> <button class="btn btn-outline-success" type="submit">My Hackathons</button> </a>
+                    {% if isLogin == '' %}
+                    <a href="/login"> <button class="btn btn-outline-success" type="submit">Login</button></a>
+                    <a href="/signup"> <button class="btn btn-outline-success" type="submit">Signup</button> </a>
+                    {% else %}
+                    <a href="/logout"> <button class="btn btn-outline-success" type="submit"> Logout</button> </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        <form action="" method="post" enctype="multipart/form-data" class="border-success">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="mobile">Mobile:</label>
+            <input type="text" id="mobile" name="mobile" required>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email">
+
+            <input type="submit" value="Submit">
+
+        </form>
+
+    </body>
+</html>
