@@ -1,25 +1,18 @@
 <!doctype html>
 <html>
     <head>
-        <title>Hackify</title>
+        <title>Contacts</title>
     </head>
-
     <body>
-
         <nav>
             <div>
-                <a>Hackify</a>
-
-                <div>
-                    {% if isLogin == '' %}
-                    <a href="/login"> <button type="submit">Login</button></a>
-                    <a href="/signup"> <button type="submit">Signup</button> </a>
-                    {% else %}
-                    <a href="/logout"> <button type="submit"> Logout</button> </a>
-                    {% endif %}
-                </div>
+                {% if isLogin == '' %}
+                <a href="/login"> <button type="submit">Login</button></a>
+                <a href="/signup"> <button type="submit">Signup</button> </a>
+                {% else %}
+                <a href="/logout"> <button type="submit"> Logout</button> </a>
+                {% endif %}
             </div>
         </nav>
-
     </body>
 </html>
