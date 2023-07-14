@@ -40,6 +40,7 @@
         <li class="contact">
             <span class="name">{{ contact.name }}</span>
             <span class="mobile">{{ contact.mobile }}</span>
+            <span class="email">{{ contact.email }}</span>
             <span class="spam">{{ contact.spam }}</span>
             <a href="{% url 'spam' cid=contact.id %}">Toggle</a>
         </li>

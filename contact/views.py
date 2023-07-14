@@ -15,7 +15,7 @@ def my_contacts(request):
         name = request.POST.get('name')
         mobile = request.POST.get('mobile')
         email = request.POST.get('email')
-        Contact.objects.create(name=name, mobile=mobile, email=email)
+        Contact.objects.create(name=name, mobile=mobile, email=email, owner=request.user)
 
     context = {
         'contacts': Contact.objects.all().values()
@@ -33,11 +33,13 @@ def search_contacts(request):
         query = request.POST.get('query')
 
         if query:
-            contacts += Contact.objects.filter(
-                Q(name__startswith=query) | Q(name__contains=query)
-            ).order_by('name')
-
             contacts += Contact.objects.filter(mobile=query)
+            contacts += Contact.objects.filter(name__startswith=query)
+            contacts += Contact.objects.filter(name__icontains=query)
+
+            for i in range(len(contacts)):
+                if contacts[i].owner != request.user:
+                    contacts[i].email = ''
 
             context = {
                 'contacts': contacts,
@@ -66,7 +68,7 @@ def populate(request, qty):
         email = fake.email()
         _spam = fake.pybool()
         try:
-            Contact.objects.create(name=name, mobile=mobile, email=email, spam=_spam)
+            Contact.objects.create(name=name, mobile=mobile, email=email, spam=_spam, owner=request.user)
         except DataError:
             pass
 
