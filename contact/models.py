@@ -8,7 +8,7 @@ class Contact(models.Model):
     mobile = models.CharField(max_length=20, blank=False, null=False)
     email = models.EmailField(blank=True, null=True)
     spam = models.BooleanField(default=False)
-    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name

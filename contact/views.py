@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
-from django.db import DataError
+from django.db import DataError, IntegrityError
 from faker import Faker
 from contact.models import Contact
 from django.shortcuts import render, redirect
 from ordered_set import OrderedSet
+from home.models import CustomUser
 
 fake = Faker()
 
@@ -27,26 +28,34 @@ def my_contacts(request):
 @login_required
 def search_contacts(request):
 
-    contacts = []
-
     if request.method == 'POST':
         query = request.POST.get('query')
+        user = CustomUser.objects.filter(mobile=query).first()
 
-        if query:
+        contacts = []
+
+        if user:
+            contact = Contact.objects.filter(mobile=user.mobile, owner=request.user).first()
+            if contact:
+                contact.email = user.email
+            else:
+                contact = Contact.objects.create(name=user.name, mobile=user.mobile, owner=request.user)
+
+            contacts = [contact]
+
+        elif query:
             contacts += Contact.objects.filter(mobile=query)
             contacts += Contact.objects.filter(name__startswith=query)
             contacts += Contact.objects.filter(name__icontains=query)
-
             for i in range(len(contacts)):
-                if contacts[i].owner != request.user:
-                    contacts[i].email = ''
+                contacts[i].email = ''
 
-            context = {
-                'contacts': OrderedSet(contacts),
-                'query': query
-            }
+        context = {
+            'contacts': OrderedSet(contacts),
+            'query': query
+        }
 
-            return render(request, 'search_contacts.html', context)
+        return render(request, 'search_contacts.html', context)
 
     return render(request, 'search_contacts.html')
 
@@ -64,7 +73,7 @@ def populate(request, qty):
 
     for _ in range(qty):
         name = fake.name()
-        s = fake.phone_number().replace('-', '')
+        s = fake.phone_number()
         mobile = "".join(c for c in s if c.isnumeric())
         email = fake.email()
         _spam = fake.pybool()
