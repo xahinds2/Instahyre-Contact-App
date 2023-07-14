@@ -80,7 +80,7 @@ AUTH_USER_MODEL = 'home.CustomUser'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'contacts',
+        'NAME': 'instacontacts',
         'USER': 'root',
         'PASSWORD': 'sahindas1@',
         'HOST': 'localhost',

@@ -11,7 +11,6 @@ pip install -r requirements.txt
 configure database in main.settings
 python manage.py makemigrations home
 python manage.py makemigrations contact
-python manage.py makemigrations
 python manage.py migrate
 
 to run the app:

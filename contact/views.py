@@ -37,6 +37,7 @@ def search_contacts(request):
         if user:
             contact = Contact.objects.filter(mobile=user.mobile, owner=request.user).first()
             if contact:
+                contact.name = user.name
                 contact.email = user.email
             else:
                 contact = Contact.objects.create(name=user.name, mobile=user.mobile, owner=request.user)
