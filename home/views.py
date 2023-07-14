@@ -1,9 +1,11 @@
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from home.models import CustomUser as User
 from django.contrib.auth import login, logout
 
 
+@login_required
 def home(request):
     context = {
         'isLogin': request.user.username

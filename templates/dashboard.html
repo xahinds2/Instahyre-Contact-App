@@ -323,6 +323,7 @@
                                 <td><a>{{ contact.mobile }}</a></td>
                                 <td><a>{{ contact.email }}</a></td>
                                 <td><a>{{ contact.spam }}</a></td>
+                                <td><a href="{% url 'spam' cid=contact.id %}">Toggle</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
