@@ -1,7 +1,9 @@
-from contact.forms import SearchForm
+from faker import Faker
 from contact.models import Contact
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+
+fake = Faker()
 
 
 def dashboard(request):
@@ -37,3 +39,19 @@ def search_contacts(request):
             return render(request, 'search.html', context)
 
     return render(request, 'search.html')
+
+
+def populate(request, qty):
+
+    for _ in range(qty):
+        name = fake.name()
+        mobile = fake.phone_number()
+        email = fake.email()
+        spam = fake.pybool()
+        Contact.objects.create(name=name, mobile=mobile, email=email, spam=spam)
+
+    context = {
+        'contacts': Contact.objects.all().values()
+    }
+
+    return render(request, 'dashboard.html', context)

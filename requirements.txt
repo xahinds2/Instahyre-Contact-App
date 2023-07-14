@@ -1,2 +1,3 @@
-django
+django~=4.2.3
 mysqlclient
+Faker~=19.1.0
