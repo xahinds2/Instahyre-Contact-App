@@ -9,7 +9,7 @@ fake = Faker()
 
 
 @login_required
-def dashboard(request):
+def my_contacts(request):
 
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -21,7 +21,7 @@ def dashboard(request):
         'contacts': Contact.objects.all().values()
     }
 
-    return render(request, 'dashboard.html', context)
+    return render(request, 'my_contacts.html', context)
 
 
 @login_required
@@ -44,9 +44,9 @@ def search_contacts(request):
                 'query': query
             }
 
-            return render(request, 'search.html', context)
+            return render(request, 'search_contacts.html', context)
 
-    return render(request, 'search.html')
+    return render(request, 'search_contacts.html')
 
 
 @login_required
@@ -64,10 +64,10 @@ def populate(request, qty):
         name = fake.name()
         mobile = fake.phone_number()
         email = fake.email()
-        spam = fake.pybool()
+        _spam = fake.pybool()
         try:
-            Contact.objects.create(name=name, mobile=mobile, email=email, spam=spam)
+            Contact.objects.create(name=name, mobile=mobile, email=email, spam=_spam)
         except DataError:
             pass
 
-    return redirect('dashboard')
+    return redirect(request.META.get('HTTP_REFERER', '/'))
