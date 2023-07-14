@@ -2,7 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.db import DataError
 from faker import Faker
 from contact.models import Contact
-from django.db.models import Q
 from django.shortcuts import render, redirect
 
 fake = Faker()
