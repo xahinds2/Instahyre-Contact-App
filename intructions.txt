@@ -8,6 +8,7 @@ set virtual environment
 enter command:
 pip install -r requirements.txt
 
+
 configure database in main.settings
 python manage.py makemigrations home
 python manage.py makemigrations contact
@@ -15,3 +16,6 @@ python manage.py migrate
 
 to run the app:
 python manage.py runserver
+
+ps : (deleted the migration so that you could make a fresh database, i have tried this zip on different machine its working as expected)
+Thank you for your time in evaluating my assignment.
