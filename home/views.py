@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from home.models import CustomUser as User
 from django.contrib.auth import login, logout
+from django.contrib.auth.hashers import make_password, check_password
 
 
 @login_required
@@ -17,8 +18,8 @@ def custom_login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        user = User.objects.filter(username=username, password=password).first()
-        if user:
+        user = User.objects.filter(username=username).first()
+        if user and check_password(password, user.password):
             login(request, user)
             return redirect('home')
 
@@ -34,9 +35,10 @@ def signup(request):
         email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
+        hash_pass = make_password(password)
 
         try:
-            User.objects.create(username=username, mobile=mobile, name=name, password=password, email=email)
+            User.objects.create(username=username, mobile=mobile, name=name, password=hash_pass, email=email)
         except IntegrityError:
             return render(request, 'signup.html', {'msg': 'Username or Mobile already exist!'})
 
